@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Relatório Completo</title>
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@700;800&family=Open+Sans:wght@400&display=swap');
+
+    .mulishBold {
+        font-family: 'Mulish', sans-serif;
+        font-weight: 700;
+    }
+    .mulishExtraBold {
+        font-family: 'Mulish', sans-serif;
+        font-weight: 800;
+    }
+    .openSansRegular {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+    }
+    .border-top {
+        border-top: 0.5px solid #000 !important;
+    }
+    .font-size-16 {
+        font-size: 16px;
+    }
+    .font-size-14 {
+        font-size: 14px;
+    }
+    .font-size-12 {
+        font-size: 12px;
+    }
+
+    /* Novos estilos personalizados */
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .header {
+        display: flex;
+        align-items: center;
+    }
+    .logo {
+        margin-right: 10px;
+    }
+    .report-title {
+        font-size: 18px;
+    }
+    .period {
+        font-size: 14px;
+    }
+    .section {
+        margin-top: 20px;
+    }
+    .section-title {
+        font-size: 16px;
+    }
+    .row-header {
+        font-weight: 700;
+    }
+    .row-data {
+        font-weight: 400;
+    }
+    .contact-info {
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+    }
+    .contact-label {
+        margin-right: 10px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="header" style="display: flex; align-items: center; justify-content: center;">
+            <img class="logo" src="data:image/png;base64,{{scrImg}}" height="100" style="float: left;">
+        </div>
+        <div class="period mulishBold" style="text-align: center;">
+            Período: {{#formatDate content.dataInicio}} {{this}} {{/formatDate}} até {{#formatDate content.dataFim}} {{this}} {{/formatDate}}
+        </div>
+        <div class="report-title mulishBold" style="text-align: center; margin: 0 auto; max-width: 80%;">Relatório Movimentação de Resíduos</div>
+    </div>
+    
+
+    <div class="container section">
+        <div class="section-title font-size-16 mulishExtraBold" style="text-align: center;">Identificação do Gerador</div>
+        <div class="row">
+            <div class="row-pair" style="display: flex; justify-content: space-between;">
+                <div class="row-header font-size-12 openSansRegular">Razão Social:</div>
+                <div class="row-data font-size-12 openSansRegular">{{content.cliente}}</div>
+            </div>
+
+            <div class="row-pair" style="display: flex; justify-content: space-between;">
+                <div class="row-header font-size-12 openSansRegular">CNPJ:</div>
+                <div class="row-data font-size-12 openSansRegular">{{#formatCnpj content.id}} {{this}} {{/formatCnpj}}</div>
+            </div>
+        
+            <div class="row-pair" style="display: flex; justify-content: space-between;">
+                <div class="row-header font-size-12 openSansRegular">Município:</div>
+                <div class="row-data font-size-12 openSansRegular">{{content.municipio}}</div>
+            </div>
+        
+            <div class="row-pair" style="display: flex; justify-content: space-between;">
+                <div class="row-header font-size-12 openSansRegular">UF:</div>
+                <div class="row-data font-size-12 openSansRegular">{{content.uf}}</div>
+            </div>
+        
+            <div class="row-pair" style="display: flex; justify-content: space-between;">
+                <div class="row-header font-size-12 openSansRegular">Fone:</div>
+                <div class="row-data font-size-12 openSansRegular">{{content.tel}}</div>
+            </div>
+        </div>
+                   
+    </div>
+
+    <div class="container section">
+        <div class="section-title font-size-16 mulishExtraBold">Identificação dos Resíduos</div>
+        <table class="table table-bordered table-striped">
+            <colgroup>
+                <col style="width: 30%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 20%;">
+                <col style="width: 20%;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="font-size-12 mulishRegular">Resíduo</th>
+                    <th class="font-size-12 mulishRegular">Peso</th>
+                    <th class="font-size-12 mulishRegular">Un</th>
+                    <th class="font-size-12 mulishRegular">Valor</th>
+                    <th class="font-size-12 mulishRegular">Tratamento</th>
+                    <th class="font-size-12 mulishRegular">Destinador</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each content.itens as |items key|}}
+                <tr>
+                    <td class="font-size-12 openSansRegular">{{items.descricao}}</td>
+                    <td class="font-size-12 openSansRegular">{{#decimalNumber items.pesoTotal}} {{this}} {{/decimalNumber}}</td>
+                    <td class="font-size-12 openSansRegular">{{items.unMedida}}</td>
+                    <td class="font-size-12 openSansRegular">{{items.valorTotal}}</td>
+                    <td class="font-size-12 openSansRegular">{{items.descTratamento}}</td>
+                    <td class="font-size-12 openSansRegular">{{items.nomeDestinador}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Relatório</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@700;800&family=Open+Sans:wght@400&display=swap');
+
+    .mulishBold {
+        font-family: 'Mulish', sans-serif;
+        font-weight: 700;
+    }
+    .mulishExtraBold {
+        font-family: 'Mulish', sans-serif;
+        font-weight: 800;
+    }
+    .openSansRegular {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+    }
+    .break-page {
+        page-break-inside: avoid;
+    }
+    .border-top {
+        border-top: 0.5px solid #000 !important;
+    }
+    .margin-top {
+        margin-top: -25px;
+    }
+    .font-size-16 {
+        font-size: 16px;
+    }
+    .font-size-14 {
+        font-size: 14px;
+    }
+    .font-size-12 {
+        font-size: 12px;
+    }
+
+</style>
+
+<body>
+    <div class="px-4 text-center margin-top">
+        <div class="row">
+            <div class="col-1 ms-4 mt-2">
+
+                <img src="data:image/png;base64,{{scrImg}}" height="100">
+            </div>
+            <div class="col-10 mt-4 font-size-14">
+                <div class="row mb-4">
+                    <span class="mulishBold">
+                        Relatório Movimentação de Resíduos
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="mulishBold">
+                        Periodo: {{#formatDate content.dataInicio}} {{this}} {{/formatDate}} até {{#formatDate content.dataFim}} {{this}} {{/formatDate}}
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 pe-5 mt-4">
+        <div class="row mb-2">
+            <div class="col text-center">
+                <span class="font-size-16 mulishExtraBold">
+                    Identificação do Gerador
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row justify-content-between ms-3 p-2">
+                <div class="col-7 text-start font-size-12 openSansRegular">
+                    <span>
+                        Razão Social: {{content.cliente}}
+                    </span>
+                </div>
+                
+            </div>
+            <div class="row justify-content-between ms-3 p-2 ">
+                <div class="col-5 text-start font-size-12 openSansRegular">
+                    <span>
+                        CNPJ: {{content.id}}
+                    </span>
+                </div>
+                <div class="col-4 text-end font-size-12 openSansRegular">
+                    <span>
+                        Fone: {{content.tel}}
+                    </span>
+                </div>
+            </div>
+            <div class="row justify-content-between  ms-3 p-2 ">
+                <div class="col-4 text-start font-size-12 openSansRegular">
+                    <span>
+                        Endereço: {{content.endereco}}
+                    </span>
+                </div>
+                <div class="col-3 text-center font-size-12 openSansRegular">
+                    <span>
+                        Municipio: {{content.municipio}}
+                    </span>
+                </div>
+                <div class="col-2 text-end font-size-12 openSansRegular">
+                    <span>
+                        UF: {{content.uf}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 pe-5 my-3">
+        <div class="row mb-2">
+            <div class="col text-center">
+                <span class="font-size-16 mulishExtraBold">
+                    Identificação dos Resíduos
+                </span>
+            </div>
+        </div>
+        <div class="row">
+    <div class="row justify-content-around border border-2 border-color-E2E2E2 rounded-1 ms-1 md-1 p-2 text-center">
+    <div class="col-2">
+        <span class="font-size-12 mulishRegular">
+            Resíduo
+        </span>
+    </div>
+    <div class="col-2">
+        <span class="font-size-12 mulishRegular">
+            Quantid.
+        </span>
+    </div>
+    <div class="col-1">
+        <span class="font-size-12 mulishRegular">
+            Un
+        </span>
+    </div>
+    <div class="col-2">
+        <span class="font-size-12 mulishRegular">
+            Valor
+        </span>
+    </div>
+    <div class="col-2">
+        <span class="font-size-12 mulishRegular">
+            Tratamento
+        </span>
+    </div>
+    <div class="col-3">
+        <span class="font-size-12 mulishRegular">
+            Destinador
+        </span>
+    </div>
+</div>
+{{#each content.itens as |items key|}}
+<div class="row justify-content-around border border-2 border-color-E2E2E2 rounded-1 ms-1 md-1 p-0 text-center d-flex justify-content-center align-items-center break-page">
+    <div class="col-2 text-break">
+        <span class="font-size-12 openSansRegular">
+            {{items.descricao}}
+        </span>
+    </div>
+    <div class="col-2">
+        <span class="font-size-12 openSansRegular">
+            {{#decimalNumber items.pesoTotal}}
+            {{this}}
+            {{/decimalNumber}}
+        </span>
+    </div>
+    <div class="col-1">
+        <span class="font-size-12 openSansRegular">
+            {{items.unMedida}}
+        </span>
+    </div>
+    <div class="col-2">
+        <span class="font-size-12 openSansRegular">
+            {{items.valorTotal}}
+        </span>
+    </div>
+    <div class="col-2 text-break">
+        <span class="font-size-12 openSansRegular">
+            {{items.descTratamento}}
+        </span>
+    </div>
+    <div class="col-3 text-break">
+        <span class="font-size-12 openSansRegular">
+            {{items.nomeDestinador}}
+        </span>
+    </div>
+</div>
+{{/each}}
+</div>
+</div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+
+</html>
